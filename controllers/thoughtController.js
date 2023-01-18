@@ -8,6 +8,7 @@ module.exports = {
             return res.json(thoughts);
         })
         .catch((err) => {
+            console.log(err);
           return res.status(500).json(err); 
         });
     },
@@ -18,13 +19,14 @@ module.exports = {
                 _id: req.params.thoughtId
             }
         )
-        .populate("reaction")
+        .select("-_v")
         .then(async (thought) =>
         !thought
         ? res.status(404).json({ message: "No thought found with this id!"})
         : res.json(thought)
         )
         .catch((err) => {
+            console.log(err);
             return res.status(500).json(err);
         });
     },
@@ -65,11 +67,13 @@ module.exports = {
         : res.json({ message: "Thought deleted!" })
         )
         .catch((err) => {
+            console.log(err);
             res.status(500).json(err);
         });
     },
 
     addReaction(req, res) {
+        console.log(req.body);
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $addToSet: { reactions: req.body }},

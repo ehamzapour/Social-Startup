@@ -16,7 +16,7 @@ router.route("/")
 
 router.route("/:userId")
 .get(getSingleUser)
-.put(updatedUser)
+.put(updateUser)
 .delete(deleteUser);
 
 router.route("/:userId/friends/:friendId")
